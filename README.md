@@ -1,104 +1,94 @@
-# EXP 1(E) CLOUD-BASED DEVICE CONTROL USING MQTT AND WI-FI COMMUNICATION
+# MQTT-Communication-using-WIFI-Module
 
-## Aim
+# AIM: 
+  To make a Lamp at home (230 V AC) On / Off using ESP8266, IFTT Google Assistance and Blynk IoT mobile application.          
+           
+# COMPONENTS REQUIRED:
+PC with Internet connection
+Micro USB cable
+Wifi connection for ESP8266 (Use any mobile hotspot or Router)
+	ESP8266 Board
+	Mobile Phone with Blynk App installed
+            IFTT for Google Voice Assistance
+	9 W Bulb and Relay control
+Arduino software 
+Jumper Wires
 
-To control an electrical device remotely through a cloud platform using MQTT communication and a Wi-Fi module.
+## Theory: 
+Blynk is an IoT platform for iOS or Android smartphones that is used to control Arduino, Raspberry Pi and NodeMCU via the Internet. This application is used to create a graphical interface or human machine interface (HMI) by compiling and providing the appropriate address on the available widgets.In this experiment we use ESP8266 to control a 220-volt lamp from a web server. But you can also use the same procedure to control fans, lights, AC, or other electrical devices that you want to control remotely.
+Relay is an electromechanical device that is used as a switch between high current and low current devices. When the coil in the relay gets fully energized, the contact shifts from the normally open position to the normally closed position. Light bulbs usually operate on 120V or 220V AC power supply. We cannot interface these AC loads directly with the ESP8266 development board, or it will damage the board. We have to use a relay between the ESP8266 and the lamp. 
+Google Assistant and IFTTT work together to let you control services with voice commands. When you say a set phrase, Google Assistant processes it and sends it to IFTTT as a trigger. If the phrase matches an applet you've created, IFTTT performs the linked action—like turning on a light or sending a message. Everything runs in the cloud, making it easy to automate tasks with just your voice, as long as the command is correctly matched and all services are online.
+When we apply an active high signal to the signal pin of the relay module from any microcontroller like ESP8266, the relay contact moves from the normally open to the normally closed position. It makes the circuit complete, and the output load turns on.
 
-# Hardware / Software Tools Required
+# PROCEDURE:
 
-- Arduino UNO / ESP32 / ESP8266 Wi-Fi Module
-- USB Cable
-- PC/Laptop
-- Arduino IDE
-- Wi-Fi Network
-- Relay Module
-- LED / DC Load
-- Breadboard
-- Jumper Wires
-- Cloud Platform such as Blynk or ThingSpeak
-- MQTT Broker / MQTT Service
+•	Connect the Arduino UNO R4 WiFi to the PC/laptop using a suitable USB cable. Install and open Arduino IDE on the computer. Install/select the Arduino UNO R4 WiFi board from the Arduino board package. Install the Blynk library in Arduino IDE. Download and install the Blynk IoT application on the mobile phone and create/login to a Blynk account. Create a new Blynk template/device and add a Button widget. Configure the button as a switch and assign a virtual datastream, such as V0. Configure the Wi-Fi SSID and password in the Arduino program along with the required Blynk authentication details. In the Arduino program, configure the built-in LED as the output and associate the Blynk button with the LED control. Select Arduino UNO R4 WiFi as the board and select the appropriate COM port. Compile and upload the program to the Arduino UNO R4 WiFi. Connect the Arduino UNO R4 WiFi to the Internet through a Wi-Fi network or mobile hotspot. Open the Blynk application on the mobile phone. Press the ON button in the Blynk application. The command is sent through the Internet to the Arduino UNO R4 WiFi, and the built-in LED turns ON. Press the OFF button. The Arduino receives the command and the built-in LED turns OFF. Thus, the built-in LED of the Arduino UNO R4 WiFi is successfully controlled remotely using the Blynk IoT application.
 
-# Circuit Diagram
+# CIRCUIT DIAGRAM:
 
----
-To upload
----
-
-# Procedure
-
-## Step 1: Assemble the Circuit
-
-1. Place the microcontroller board, Wi-Fi module, relay module, LED/load, and breadboard on the workbench.
-2. Connect the required power supply and GND connections.
-3. Ensure that the Wi-Fi module and controller operate at their specified voltage levels.
-
-## Step 2: Connect the Relay Module
-
-1. Connect the **VCC** of the relay module to the appropriate power supply.
-2. Connect the **GND** of the relay module to **GND**.
-3. Connect the relay input pin to a suitable digital output pin of the controller.
-4. Connect the LED or other low-voltage load through the relay contacts.
-5. Do not connect mains voltage directly during laboratory testing unless the setup is specifically designed and supervised for it.
-
-## Step 3: Configure Wi-Fi Communication
-
-1. Connect the Wi-Fi-enabled controller to the required Wi-Fi network.
-2. Enter the Wi-Fi SSID and password in the program.
-3. Verify that the device obtains an IP address.
-4. Confirm that the controller can establish an Internet connection.
-
-## Step 4: Configure the Cloud / MQTT Platform
-
-1. Create an account on the selected cloud platform such as **Blynk** or **ThingSpeak**, as applicable.
-2. Configure the required device, virtual control, channel, or dashboard.
-3. Configure the MQTT broker/server details.
-4. Set the MQTT topic used for ON/OFF control.
-5. Define the payload values, for example:
-   - `ON` – Switch device ON
-   - `OFF` – Switch device OFF
-
-## Step 5: Write and Upload the Program
-
-1. Open the Arduino IDE.
-2. Include the required Wi-Fi and MQTT libraries.
-3. Enter the Wi-Fi credentials and MQTT broker details.
-4. Configure the relay output pin.
-5. Establish a connection with the Wi-Fi network.
-6. Establish a connection with the MQTT broker.
-7. Subscribe to the required MQTT topic.
-8. Write the callback function to process ON/OFF commands.
-9. Verify the program using the **Verify** button.
-10. Upload the program to the controller.
-
-## Step 6: Execute the Program
-
-1. Power ON the controller and Wi-Fi module.
-2. Open the configured cloud dashboard or MQTT client.
-3. Send an **ON** command through the configured MQTT topic.
-4. Observe that the relay activates and the connected device turns ON.
-5. Send an **OFF** command.
-6. Observe that the relay deactivates and the connected device turns OFF.
-7. Monitor the Serial Monitor to verify MQTT connection and received commands.
-
-## Step 7: Verify the Output
-
-1. Check whether the controller successfully connects to Wi-Fi.
-2. Verify the MQTT broker connection.
-3. Send an ON command from the cloud platform.
-4. Observe the device switching ON.
-5. Send an OFF command from the cloud platform.
-6. Observe the device switching OFF.
-7. Record the commands and corresponding device states.
-
-# Program
+<img width="663" height="400" alt="image" src="https://github.com/user-attachments/assets/bfebc70d-25b4-4b4a-a7e1-2a02c09bf423" />
 
 
+ 
+# PROGRAM:
+```
+#define BLYNK_TEMPLATE_ID "TMPL3g_KFR7Zi"
+#define BLYNK_TEMPLATE_NAME "Arduino Led Control"
+#define BLYNK_AUTH_TOKEN            "xxxxxxxxxxxxxxx"
 
-> **Note:** The above program is written for an **ESP32** using the `WiFi.h` library. Replace the Wi-Fi credentials, MQTT broker address, and MQTT topic with the values used in the laboratory setup.
+// Enables terminal prints for debugging
+#define BLYNK_PRINT Serial
 
-# Observation
+// 2. The CORRECT headers for the Arduino UNO R4 WiFi
+#include <WiFiS3.h>
+#include <BlynkSimpleWifi.h>
+
+// 3. Add your Wi-Fi credentials here
+char ssid[] = "_karthik_";
+char pass[] = "20061210";
+
+// This function runs every time the state of Virtual Pin V0 changes in the app
+BLYNK_WRITE(V0) {
+  int buttonState = param.asInt(); // Read the value from the Blynk app
+  
+  if (buttonState == 1) {
+    digitalWrite(LED_BUILTIN, HIGH); // Turn ON the built-in LED
+    Serial.println("LED is ON");
+  } else {
+    digitalWrite(LED_BUILTIN, LOW);  // Turn OFF the built-in LED
+    Serial.println("LED is OFF");
+  }
+}
+
+void setup() {
+  // Start the serial monitor
+  Serial.begin(115200);
+
+  // Initialize the built-in LED pin as an output
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW); // Start with the LED off
+
+  // Connect to Wi-Fi and the Blynk Cloud
+  Serial.println("Connecting to Blynk...");
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
+}
+
+void loop() {
+  // Keep the Blynk connection alive
+  Blynk.run();
+}
+```
+
+ 
+# Output:
+
+<img width="960" height="1280" alt="image" src="https://github.com/user-attachments/assets/93652c44-feb5-4164-ad8b-dfbbf8ab9aa9" />
 
 
-# Result
+<img width="960" height="1280" alt="image" src="https://github.com/user-attachments/assets/0c6bf35e-edbc-4258-a610-e2d356c4e8ed" />
 
-The **cloud-based device control system was successfully implemented using MQTT and Wi-Fi communication**. The device was remotely controlled by sending ON/OFF commands through the MQTT communication channel. The experiment demonstrated the use of **IoT cloud connectivity, MQTT messaging, Wi-Fi communication, and remote device control**.
+
+## Result:
+
+Hence an home automation system is implemented using the Blynk app.
+
